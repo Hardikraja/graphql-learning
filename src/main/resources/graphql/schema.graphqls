@@ -6,7 +6,7 @@ type Mutation{
 
 type Query{
 
-    allBooks:[Book]
+    books:[Book]
 
     getBook(bookId:Int):Book
 
