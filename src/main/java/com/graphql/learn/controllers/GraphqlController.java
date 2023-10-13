@@ -4,9 +4,11 @@ import com.graphql.learn.resolver.BookResolver;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.GraphQLException;
+import graphql.execution.AsyncExecutionStrategy;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,8 @@ public class GraphqlController {
                 .withOperationsFromSingleton(bookResolver)
                 .generate();
         this.graphQL = new GraphQL.Builder(schema)
+                .queryExecutionStrategy(new AsyncExecutionStrategy(new CustomExceptionHandler()))
+                .mutationExecutionStrategy(new AsyncExecutionStrategy(new CustomExceptionHandler()))
                 .build();
     }
 

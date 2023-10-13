@@ -17,6 +17,9 @@ public class BookResolver  {
 
     @GraphQLQuery
     public List<Book> books(){
+        if(true){
+            throw new NullPointerException("Null pointer exception");
+        }
         return bookService.getAll();
     }
 
